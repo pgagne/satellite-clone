@@ -20,17 +20,23 @@ Ideally, you need two hosts to run this project:
 - RHEL 6
 - RHEL 7
 
-1. Install `ansible` package on the Control node. For RHEL boxes, [access to EPEL] (https://access.redhat.com/solutions/3358) is required.
+1. Installation of required packages:
+   a. Install `ansible` package on the Control node. For RHEL boxes, [access to EPEL] (https://access.redhat.com/solutions/3358) is required.
 
-  ```console
-     # yum install -y ansible
-  ```
+      ```console
+        # yum install -y ansible
+      ```
+   b. Since the playbook uses `synchronize` module, install `rsync` package on the Ansible Control node.
+
+      ```console
+        # yum install -y rsync
+      ```
 2. git clone this project.
 
   ```console
      # git clone https://github.com/RedHatSatellite/satellite-clone.git
   ```
-3. Create an inventory file named `inventory` (by copying `inventory.sample`) and udpate it as necessary:
+3. Create an inventory file named `inventory` (by copying `inventory.sample`) and update it as necessary:
 
   ```console
     # cp inventory.sample inventory
@@ -41,6 +47,7 @@ Now you can proceed to any of the following tasks:
 <!-- Do not change link names as they are linked to from external sites! -->
  * [Cloning a Satellite host](#cloning-a-satellite-host)
  * [Changing the hostname of a Satellite host](#changing-the-hostname-of-a-satellite-host)
+ * [Update Satellite to a new minor version](#update-satellite-to-a-new-minor-version)
 
 ## Cloning a Satellite host
 
@@ -52,7 +59,7 @@ Now you can proceed to any of the following tasks:
 
 #### On the Destination node (blank host)
 
-1. Make sure that the Destination node has adequate space and also make sure that the root partition has all the storage space. You may utilize this [script] (https://gist.githubusercontent.com/sthirugn/cdc34006ae280c344a15a474f7e35918/raw/28c33aa6ccf7ce39cad5692d44702b839023941a/reallocate.sh) if needed.
+1. Make sure that the Destination node has adequate space and also make sure that the root partition has all the storage space. You may utilize this [script] (https://gist.githubusercontent.com/sthirugn/cdc34006ae280c344a15a474f7e35918/raw/d6382b8ffabcd9b2a5ab07150201388abfb7e01f/reallocate.sh) if needed.
 
   **Note** The ansible playbook run will fail if the free space in root partition is less than the value specified in `required_root_free_space` variable in [roles/sat6repro/vars/main.yml] (roles/sat6repro/vars/main.yml)
 
